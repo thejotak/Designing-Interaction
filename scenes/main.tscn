@@ -16,6 +16,7 @@ sky = SubResource("Sky_ig7tw")
 tonemap_mode = 2
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_7dm0k"]
+rough = true
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ig7tw"]
 size = Vector3(7.0039063, 1, 7.017334)
@@ -25,7 +26,6 @@ size = Vector3(7.0039063, 1, 7.017334)
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_0wfyh"]
 friction = 0.72
 rough = true
-bounce = 0.2
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_h2yge"]
 
@@ -55,13 +55,38 @@ shape = SubResource("BoxShape3D_ig7tw")
 transform = Transform3D(7, 0, 0, 0, 1, 0, 0, 0, 7, 0, 0, 0)
 mesh = SubResource("BoxMesh_0xm2m")
 
+[node name="Ground2" type="StaticBody3D" parent="." unique_id=2455866]
+transform = Transform3D(2.3, 0, 0, 0, -5.9604645e-08, -2.3, 0, 2.3, -5.9604645e-08, 0, 5.7736206, -8.901685)
+physics_material_override = SubResource("PhysicsMaterial_7dm0k")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground2" unique_id=1480021406]
+shape = SubResource("BoxShape3D_ig7tw")
+
+[node name="MeshShape3D" type="MeshInstance3D" parent="Ground2" unique_id=292558456]
+transform = Transform3D(7, 0, 0, 0, 1, 0, 0, 0, 7, 0, 0, 0)
+mesh = SubResource("BoxMesh_0xm2m")
+
+[node name="Ground3" type="StaticBody3D" parent="." unique_id=1105078065]
+transform = Transform3D(2.3, 0, 0, 0, -5.9604645e-08, -2.3, 0, 2.3, -5.9604645e-08, 0, 5.7736206, 7.0983152)
+physics_material_override = SubResource("PhysicsMaterial_7dm0k")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground3" unique_id=2013252223]
+shape = SubResource("BoxShape3D_ig7tw")
+
+[node name="MeshShape3D" type="MeshInstance3D" parent="Ground3" unique_id=1235768588]
+transform = Transform3D(7, 0, 0, 0, 1, 0, 0, 0, 7, 0, 0, 0)
+mesh = SubResource("BoxMesh_0xm2m")
+
 [node name="cube" type="RigidBody3D" parent="." unique_id=1828523816]
 transform = Transform3D(0.56892073, 0, 0.82239234, 0, 1, 0, -0.82239234, 0, 0.56892073, 0, 4.243415, 0)
-mass = 3.0
+mass = 10.0
 physics_material_override = SubResource("PhysicsMaterial_0wfyh")
+inertia = Vector3(10, 10, 10)
+angular_damp = 1.0
 script = ExtResource("1_0wfyh")
-force = 5.0
-forward_force = 5
+force = 50.0
+forward_force = 30
+up_force = 20
 
 [node name="RemoteTransform3D" type="RemoteTransform3D" parent="cube" unique_id=724274970]
 remote_path = NodePath("../../camera_joint")
