@@ -13,7 +13,19 @@ sky_material = SubResource("ProceduralSkyMaterial_7dm0k")
 [sub_resource type="Environment" id="Environment_0xm2m"]
 background_mode = 2
 sky = SubResource("Sky_ig7tw")
+ambient_light_source = 3
+ambient_light_color = Color(0.8080868, 0.38150465, 0.5334485, 1)
+ambient_light_sky_contribution = 0.89
+ambient_light_energy = 16.0
+reflected_light_source = 1
 tonemap_mode = 2
+tonemap_exposure = 0.35
+glow_intensity = 5.96
+glow_bloom = 0.03
+volumetric_fog_enabled = true
+volumetric_fog_density = 1.0
+volumetric_fog_albedo = Color(0.52156866, 1, 1, 1)
+volumetric_fog_emission = Color(0.5396635, 0.5396635, 0.53966343, 1)
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_7dm0k"]
 rough = true
@@ -26,6 +38,7 @@ size = Vector3(7.0039063, 1, 7.017334)
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_0wfyh"]
 friction = 0.72
 rough = true
+bounce = 0.39
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_h2yge"]
 
@@ -102,13 +115,13 @@ mesh = SubResource("BoxMesh_0xm2m")
 
 [node name="cube" type="RigidBody3D" parent="." unique_id=1828523816]
 transform = Transform3D(0.56892073, 0, 0.82239234, 0, 1, 0, -0.82239234, 0, 0.56892073, 0, 4.243415, -4.83957)
-mass = 10.0
+mass = 20.0
 physics_material_override = SubResource("PhysicsMaterial_0wfyh")
-inertia = Vector3(10, 10, 10)
+inertia = Vector3(15, 15, 15)
 angular_damp = 1.0
 script = ExtResource("1_0wfyh")
 forward_force = 25
-up_force = 10
+up_force = 15
 
 [node name="RemoteTransform3D" type="RemoteTransform3D" parent="cube" unique_id=724274970]
 remote_path = NodePath("../../camera_joint")
