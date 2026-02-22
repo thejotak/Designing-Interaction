@@ -58,10 +58,10 @@ func _on_input_event(camera: Node, event: InputEvent, event_position: Vector3, n
 
 func _physics_process(delta: float) -> void:
 	if is_clicking:
-		time_since_press = on_press_ticks - Time.get_ticks_msec()
+		time_since_press = Time.get_ticks_msec() - on_press_ticks 
 		if  time_since_press <= long_press_limit: 
-			apply_force(direction3D * sustained_force)
-		else: print("The time since press has ecceeded the long press limit")
+			apply_force(direction3D * sustained_force, )
+			print(time_since_press)
 
 func move_cube(mouse_pressed_position: Vector3):
 	
