@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://cgipnl1d40hlt"]
 
 [ext_resource type="Script" uid="uid://bakjhh1qujlw2" path="res://scripts/cube_controller.gd" id="1_0wfyh"]
+[ext_resource type="ArrayMesh" uid="uid://ecgj3s44e643" path="res://assets/rounded_cube.tres" id="2_jyhfs"]
 [ext_resource type="Script" uid="uid://ddu4f4ebg5c20" path="res://scripts/camera_controller.gd" id="2_sugp2"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_7dm0k"]
@@ -30,15 +31,11 @@ volumetric_fog_emission = Color(0.5396635, 0.5396635, 0.53966343, 1)
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_0wfyh"]
 friction = 0.72
 rough = true
-bounce = 0.39
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_0wfyh"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_sugp2"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1bvp3"]
-albedo_color = Color(1, 1, 0.19607843, 1)
-
-[sub_resource type="BoxMesh" id="BoxMesh_lquwl"]
-material = SubResource("StandardMaterial3D_1bvp3")
+[sub_resource type="SphereShape3D" id="SphereShape3D_jyhfs"]
+radius = 0.2
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_7dm0k"]
 rough = true
@@ -59,13 +56,13 @@ shadow_enabled = true
 
 [node name="cube" type="RigidBody3D" parent="." unique_id=1828523816]
 transform = Transform3D(0.56892073, 0, 0.82239234, 0, 1, 0, -0.82239234, 0, 0.56892073, -39.988373, 4.243415, -4.83957)
-mass = 15.0
+mass = 30.0
 physics_material_override = SubResource("PhysicsMaterial_0wfyh")
 gravity_scale = 2.0
-inertia = Vector3(15, 15, 15)
+inertia = Vector3(100, 100, 40)
 angular_damp = 1.0
 script = ExtResource("1_0wfyh")
-forward_force = 5
+forward_force = 100
 up_force = 3
 sustained_force = 10
 long_press_limit = 500
@@ -75,11 +72,49 @@ remote_path = NodePath("../../camera_joint")
 update_rotation = false
 update_scale = false
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="cube" unique_id=2147387921]
-shape = SubResource("BoxShape3D_0wfyh")
-
 [node name="MeshInstance3D" type="MeshInstance3D" parent="cube" unique_id=138398418]
-mesh = SubResource("BoxMesh_lquwl")
+transform = Transform3D(0.535, 0, 0, 0, 0.535, 0, 0, 0, 0.535, 0, 0, 0)
+mesh = ExtResource("2_jyhfs")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="cube" unique_id=779155355]
+transform = Transform3D(0.91, 0, 0, 0, 0.91, 0, 0, 0, 0.91, 0, 0, 0)
+shape = SubResource("BoxShape3D_sugp2")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="cube" unique_id=1682160872]
+transform = Transform3D(0.94, 0, 0, 0, 0.94, 0, 0, 0, 0.94, 0.351227, -0.353611, 0.34831375)
+shape = SubResource("SphereShape3D_jyhfs")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="cube" unique_id=1500026482]
+transform = Transform3D(0.94, 0, 0, 0, 0.94, 0, 0, 0, 0.94, -0.3530562, -0.353611, 0.34831375)
+shape = SubResource("SphereShape3D_jyhfs")
+
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="cube" unique_id=1149252349]
+transform = Transform3D(0.94, 0, 0, 0, 0.94, 0, 0, 0, 0.94, -0.3530562, 0.35317516, 0.34831375)
+shape = SubResource("SphereShape3D_jyhfs")
+
+[node name="CollisionShape3D5" type="CollisionShape3D" parent="cube" unique_id=239373499]
+transform = Transform3D(0.94, 0, 0, 0, 0.94, 0, 0, 0, 0.94, 0.35062498, 0.35317516, 0.34831375)
+shape = SubResource("SphereShape3D_jyhfs")
+
+[node name="CollisionShape3D6" type="CollisionShape3D" parent="cube" unique_id=1091064756]
+transform = Transform3D(0.94, 0, 0, 0, 0.94, 0, 0, 0, 0.94, 0.350625, 0.35317516, -0.35229957)
+shape = SubResource("SphereShape3D_jyhfs")
+
+[node name="CollisionShape3D7" type="CollisionShape3D" parent="cube" unique_id=112779824]
+transform = Transform3D(0.94, 0, 0, 0, 0.94, 0, 0, 0, 0.94, 0.350625, -0.3572216, -0.35229957)
+shape = SubResource("SphereShape3D_jyhfs")
+
+[node name="CollisionShape3D8" type="CollisionShape3D" parent="cube" unique_id=1575013304]
+transform = Transform3D(0.94, 0, 0, 0, 0.94, 0, 0, 0, 0.94, -0.35306832, -0.3572216, -0.3522996)
+shape = SubResource("SphereShape3D_jyhfs")
+
+[node name="CollisionShape3D9" type="CollisionShape3D" parent="cube" unique_id=537252641]
+transform = Transform3D(0.94, 0, 0, 0, 0.94, 0, 0, 0, 0.94, -0.35306832, 0.34920263, -0.3522996)
+shape = SubResource("SphereShape3D_jyhfs")
+
+[node name="Timer" type="Timer" parent="cube" unique_id=1780956391]
+process_callback = 0
+one_shot = true
 
 [node name="camera_joint" type="Node3D" parent="." unique_id=1059362681]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -39.988373, 4.243415, -4.83957)
