@@ -1,0 +1,97 @@
+[gd_scene format=3]
+
+[ext_resource type="ArrayMesh" path="res://assets/rounded_cube.tres" id="1_ni0r5"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_0wfyh"]
+friction = 0.72
+rough = true
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_sugp2"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_jyhfs"]
+radius = 0.2
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_tbgi4"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tefeu"]
+albedo_color = Color(0.2509804, 0.3882353, 1, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_o6xl0"]
+material = SubResource("StandardMaterial3D_tefeu")
+
+[node name="player" type="Node3D" unique_id=1582415232]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30.72186, 4.732136, 0)
+visible = false
+
+[node name="cube" type="RigidBody3D" parent="." unique_id=759842958]
+transform = Transform3D(0.48431784, 0.0018213855, 0.8748902, 3.7449063e-06, 0.99999785, -0.0020839132, -0.8748921, 0.0010125525, 0.48431677, 0.15914154, -0.85311556, 0.056300603)
+mass = 30.0
+physics_material_override = SubResource("PhysicsMaterial_0wfyh")
+gravity_scale = 2.0
+inertia = Vector3(100, 100, 40)
+linear_velocity = Vector3(0.00014268728, 6.1142473e-06, -4.403287e-05)
+angular_velocity = Vector3(-7.9283964e-05, 6.975626e-07, -0.00026083228)
+angular_damp = 1.0
+
+[node name="RemoteTransform3D" type="RemoteTransform3D" parent="cube" unique_id=639282900]
+remote_path = NodePath("../../../camera_joint")
+update_rotation = false
+update_scale = false
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="cube" unique_id=1675026996]
+transform = Transform3D(0.535, 0, 0, 0, 0.535, 0, 0, 0, 0.535, 0, 0, 0)
+mesh = ExtResource("1_ni0r5")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="cube" unique_id=2104234468]
+transform = Transform3D(0.91, 0, 0, 0, 0.91, 0, 0, 0, 0.91, 0, 0, 0)
+shape = SubResource("BoxShape3D_sugp2")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="cube" unique_id=1185417720]
+transform = Transform3D(0.94, 0, 0, 0, 0.94, 0, 0, 0, 0.94, 0.351227, -0.353611, 0.34831375)
+shape = SubResource("SphereShape3D_jyhfs")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="cube" unique_id=1525893102]
+transform = Transform3D(0.94, 0, 0, 0, 0.94, 0, 0, 0, 0.94, -0.3530562, -0.353611, 0.34831375)
+shape = SubResource("SphereShape3D_jyhfs")
+
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="cube" unique_id=1704663074]
+transform = Transform3D(0.94, 0, 0, 0, 0.94, 0, 0, 0, 0.94, -0.3530562, 0.35317516, 0.34831375)
+shape = SubResource("SphereShape3D_jyhfs")
+
+[node name="CollisionShape3D5" type="CollisionShape3D" parent="cube" unique_id=1045522603]
+transform = Transform3D(0.94, 0, 0, 0, 0.94, 0, 0, 0, 0.94, 0.35062498, 0.35317516, 0.34831375)
+shape = SubResource("SphereShape3D_jyhfs")
+
+[node name="CollisionShape3D6" type="CollisionShape3D" parent="cube" unique_id=842415996]
+transform = Transform3D(0.94, 0, 0, 0, 0.94, 0, 0, 0, 0.94, 0.350625, 0.35317516, -0.35229957)
+shape = SubResource("SphereShape3D_jyhfs")
+
+[node name="CollisionShape3D7" type="CollisionShape3D" parent="cube" unique_id=2087967125]
+transform = Transform3D(0.94, 0, 0, 0, 0.94, 0, 0, 0, 0.94, 0.350625, -0.3572216, -0.35229957)
+shape = SubResource("SphereShape3D_jyhfs")
+
+[node name="CollisionShape3D8" type="CollisionShape3D" parent="cube" unique_id=486301990]
+transform = Transform3D(0.94, 0, 0, 0, 0.94, 0, 0, 0, 0.94, -0.35306832, -0.3572216, -0.3522996)
+shape = SubResource("SphereShape3D_jyhfs")
+
+[node name="CollisionShape3D9" type="CollisionShape3D" parent="cube" unique_id=1034548386]
+transform = Transform3D(0.94, 0, 0, 0, 0.94, 0, 0, 0, 0.94, -0.35306832, 0.34920263, -0.3522996)
+shape = SubResource("SphereShape3D_jyhfs")
+
+[node name="Timer" type="Timer" parent="cube" unique_id=13919901]
+process_callback = 0
+one_shot = true
+
+[node name="ball" type="RigidBody3D" parent="." unique_id=1244167404]
+transform = Transform3D(-0.27873635, -0.74503475, -0.6059943, 0.7637877, -0.55449355, 0.3304016, -0.5821807, -0.37075603, 0.723606, 0.15609932, -0.78448725, 0.07080821)
+linear_velocity = Vector3(0.00016093944, 8.268979e-06, -4.9371974e-05)
+angular_velocity = Vector3(-8.046363e-05, 1.9097429e-06, -0.0002618343)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ball" unique_id=1506518493]
+shape = SubResource("SphereShape3D_tbgi4")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ball" unique_id=520030060]
+mesh = SubResource("SphereMesh_o6xl0")
+
+[connection signal="input_event" from="cube" to="cube" method="_on_input_event"]
+[connection signal="timeout" from="cube/Timer" to="ball/MeshInstance3D" method="_on_timer_timeout"]
