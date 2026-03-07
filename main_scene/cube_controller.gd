@@ -66,7 +66,7 @@ func _physics_process(delta: float) -> void:
 func move_cube(mouse_pressed_position: Vector3):
 	
 	if $Timer.is_stopped():
-		direction3D = global_position - $"../camera_joint/Camera3D".global_position
+		direction3D = global_position - $"../../camera_joint/Camera3D".global_position
 		var direction2D = Vector2(direction3D.x, direction3D.z)
 		direction2D = direction2D.normalized()
 		
@@ -76,7 +76,7 @@ func move_cube(mouse_pressed_position: Vector3):
 		direction3D.x = direction2D.x
 		direction3D.z = direction2D.y
 		
-		apply_impulse(direction3D, $"../camera_joint/Camera3D".global_position)
+		apply_impulse(direction3D, $"../../camera_joint/Camera3D".global_position)
 		is_clicking = true
 		$Timer.start(1)
 	
