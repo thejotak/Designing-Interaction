@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://cgipnl1d40hlt"]
 
-[ext_resource type="Script" uid="uid://bakjhh1qujlw2" path="res://main_scene/cube_controller.gd" id="1_k0xv7"]
-[ext_resource type="ArrayMesh" uid="uid://ecgj3s44e643" path="res://assets/rounded_cube.tres" id="2_mxx3b"]
+[ext_resource type="Script" uid="uid://b272w6r6ndpgk" path="res://main_scene/simple_cube_controller.gd" id="4_k0xv7"]
 [ext_resource type="Script" uid="uid://ddu4f4ebg5c20" path="res://main_scene/camera_controller.gd" id="4_tf6gq"]
 [ext_resource type="Script" uid="uid://cyh55286v10ei" path="res://main_scene/dampness_debug_input.gd" id="5_1t12t"]
+[ext_resource type="ArrayMesh" uid="uid://dq7nyxiu7fqji" path="res://assets/cube_to_sphere.res" id="5_k0xv7"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_7dm0k"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -29,23 +29,6 @@ volumetric_fog_density = 1.0
 volumetric_fog_albedo = Color(0.52156866, 1, 1, 1)
 volumetric_fog_emission = Color(0.5396635, 0.5396635, 0.53966343, 1)
 
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_0wfyh"]
-friction = 0.72
-rough = true
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_sugp2"]
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_jyhfs"]
-radius = 0.2
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_tbgi4"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tefeu"]
-albedo_color = Color(0.2509804, 0.3882353, 1, 1)
-
-[sub_resource type="SphereMesh" id="SphereMesh_o6xl0"]
-material = SubResource("StandardMaterial3D_tefeu")
-
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_7dm0k"]
 rough = true
 
@@ -53,6 +36,12 @@ rough = true
 size = Vector3(7.0039063, 1, 7.017334)
 
 [sub_resource type="BoxMesh" id="BoxMesh_0xm2m"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_k0xv7"]
+friction = 0.5
+bounce = 0.2
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_mxx3b"]
 
 [node name="main" type="Node3D" unique_id=1041167234]
 
@@ -63,85 +52,12 @@ environment = SubResource("Environment_0xm2m")
 transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
 shadow_enabled = true
 
-[node name="player" type="Node3D" parent="." unique_id=1753368211]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30.72186, 4.732136, 0)
-
-[node name="cube" type="RigidBody3D" parent="player" unique_id=1828523816]
-transform = Transform3D(0.56892073, 0, 0.82239234, 0, 1, 0, -0.82239234, 0, 0.56892073, 0, 0, 0)
-mass = 30.0
-physics_material_override = SubResource("PhysicsMaterial_0wfyh")
-gravity_scale = 2.0
-inertia = Vector3(100, 100, 40)
-angular_damp = 1.0
-script = ExtResource("1_k0xv7")
-forward_force = 100
-up_force = 3
-sustained_force = 10
-long_press_limit = 500
-
-[node name="RemoteTransform3D" type="RemoteTransform3D" parent="player/cube" unique_id=724274970]
-remote_path = NodePath("../../../camera_joint")
-update_rotation = false
-update_scale = false
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="player/cube" unique_id=138398418]
-transform = Transform3D(0.535, 0, 0, 0, 0.535, 0, 0, 0, 0.535, 0, 0, 0)
-mesh = ExtResource("2_mxx3b")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="player/cube" unique_id=779155355]
-transform = Transform3D(0.91, 0, 0, 0, 0.91, 0, 0, 0, 0.91, 0, 0, 0)
-shape = SubResource("BoxShape3D_sugp2")
-
-[node name="CollisionShape3D2" type="CollisionShape3D" parent="player/cube" unique_id=1682160872]
-transform = Transform3D(0.94, 0, 0, 0, 0.94, 0, 0, 0, 0.94, 0.351227, -0.353611, 0.34831375)
-shape = SubResource("SphereShape3D_jyhfs")
-
-[node name="CollisionShape3D3" type="CollisionShape3D" parent="player/cube" unique_id=1500026482]
-transform = Transform3D(0.94, 0, 0, 0, 0.94, 0, 0, 0, 0.94, -0.3530562, -0.353611, 0.34831375)
-shape = SubResource("SphereShape3D_jyhfs")
-
-[node name="CollisionShape3D4" type="CollisionShape3D" parent="player/cube" unique_id=1149252349]
-transform = Transform3D(0.94, 0, 0, 0, 0.94, 0, 0, 0, 0.94, -0.3530562, 0.35317516, 0.34831375)
-shape = SubResource("SphereShape3D_jyhfs")
-
-[node name="CollisionShape3D5" type="CollisionShape3D" parent="player/cube" unique_id=239373499]
-transform = Transform3D(0.94, 0, 0, 0, 0.94, 0, 0, 0, 0.94, 0.35062498, 0.35317516, 0.34831375)
-shape = SubResource("SphereShape3D_jyhfs")
-
-[node name="CollisionShape3D6" type="CollisionShape3D" parent="player/cube" unique_id=1091064756]
-transform = Transform3D(0.94, 0, 0, 0, 0.94, 0, 0, 0, 0.94, 0.350625, 0.35317516, -0.35229957)
-shape = SubResource("SphereShape3D_jyhfs")
-
-[node name="CollisionShape3D7" type="CollisionShape3D" parent="player/cube" unique_id=112779824]
-transform = Transform3D(0.94, 0, 0, 0, 0.94, 0, 0, 0, 0.94, 0.350625, -0.3572216, -0.35229957)
-shape = SubResource("SphereShape3D_jyhfs")
-
-[node name="CollisionShape3D8" type="CollisionShape3D" parent="player/cube" unique_id=1575013304]
-transform = Transform3D(0.94, 0, 0, 0, 0.94, 0, 0, 0, 0.94, -0.35306832, -0.3572216, -0.3522996)
-shape = SubResource("SphereShape3D_jyhfs")
-
-[node name="CollisionShape3D9" type="CollisionShape3D" parent="player/cube" unique_id=537252641]
-transform = Transform3D(0.94, 0, 0, 0, 0.94, 0, 0, 0, 0.94, -0.35306832, 0.34920263, -0.3522996)
-shape = SubResource("SphereShape3D_jyhfs")
-
-[node name="Timer" type="Timer" parent="player/cube" unique_id=1780956391]
-process_callback = 0
-one_shot = true
-
-[node name="ball" type="RigidBody3D" parent="player" unique_id=2078326275]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="player/ball" unique_id=869886844]
-shape = SubResource("SphereShape3D_tbgi4")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="player/ball" unique_id=1048866348]
-mesh = SubResource("SphereMesh_o6xl0")
-
 [node name="camera_joint" type="Node3D" parent="." unique_id=1059362681]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30.72186, 4.732136, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45.32111, 15.527721, -0.49628022)
 script = ExtResource("4_tf6gq")
 
 [node name="Camera3D" type="Camera3D" parent="camera_joint" unique_id=679232197]
-transform = Transform3D(0.1476539, 0.49451947, -0.856533, 9.601095e-09, 0.86602545, 0.49999994, 0.9890391, -0.07382694, 0.12787202, -4.0155487, 3.665059, 0.31329572)
+transform = Transform3D(0.1476539, 0.49451947, -0.85653305, 9.601095e-09, 0.86602545, 0.49999994, 0.9890391, -0.07382694, 0.12787202, -4.7159195, 2.8085442, 0)
 
 [node name="Environment" type="Node" parent="." unique_id=620383259]
 
@@ -153,7 +69,7 @@ physics_material_override = SubResource("PhysicsMaterial_7dm0k")
 shape = SubResource("BoxShape3D_ig7tw")
 
 [node name="MeshShape3D" type="MeshInstance3D" parent="Environment/Ground" unique_id=656261150]
-transform = Transform3D(7, 0, 0, 0, 1, 0, 0, 0, 7, 0, 0, 0)
+transform = Transform3D(7, 0, 0, 0, 1, 0, 0, 0, 7, -0.0007700037, -0.0027824342, -0.0009857158)
 mesh = SubResource("BoxMesh_0xm2m")
 
 [node name="Ground2" type="StaticBody3D" parent="Environment" unique_id=2455866]
@@ -203,7 +119,36 @@ mesh = SubResource("BoxMesh_0xm2m")
 
 [node name="dampness_debug_input" type="Node" parent="." unique_id=1166064394 node_paths=PackedStringArray("cube_transformer")]
 script = ExtResource("5_1t12t")
-cube_transformer = NodePath("../player/ball")
+cube_transformer = NodePath("")
 
-[connection signal="input_event" from="player/cube" to="player/cube" method="_on_input_event"]
-[connection signal="timeout" from="player/cube/Timer" to="player/ball/MeshInstance3D" method="_on_timer_timeout"]
+[node name="Player" type="RigidBody3D" parent="." unique_id=1347377217 node_paths=PackedStringArray("camera")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31.559135, 6, 0)
+axis_lock_angular_y = true
+mass = 15.0
+physics_material_override = SubResource("PhysicsMaterial_k0xv7")
+gravity_scale = 3.0
+angular_damp = 3.0
+script = ExtResource("4_k0xv7")
+forward_force = 35
+up_force = 5
+press_cooldown = 0.6
+camera = NodePath("../camera_joint/Camera3D")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player" unique_id=982622254]
+shape = SubResource("BoxShape3D_mxx3b")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Player" unique_id=1766096784]
+transform = Transform3D(60, 0, 0, 0, 60, 0, 0, 0, 60, 0, 0, 0)
+mesh = ExtResource("5_k0xv7")
+blend_shapes/Sphere = 0.0
+
+[node name="RemoteTransform3D" type="RemoteTransform3D" parent="Player" unique_id=1739153026]
+remote_path = NodePath("../../camera_joint")
+update_rotation = false
+update_scale = false
+
+[node name="Timer" type="Timer" parent="Player" unique_id=1484205448]
+wait_time = 0.2
+one_shot = true
+
+[connection signal="input_event" from="Player" to="Player" method="_on_input_event"]
