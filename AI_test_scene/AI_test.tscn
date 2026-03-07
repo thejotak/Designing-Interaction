@@ -1,0 +1,76 @@
+[gd_scene format=3 uid="uid://b3l005rfxrgf7"]
+
+[ext_resource type="Script" uid="uid://bpftvaxpa2me" path="res://AI_test_scene/cube_rounder_AI.gd" id="1_eiaq8"]
+[ext_resource type="Script" uid="uid://7u2xr6bavkv1" path="res://AI_test_scene/change_cube_shape.gd" id="2_018vu"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_qcek6"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_3cq71"]
+sky_material = SubResource("ProceduralSkyMaterial_qcek6")
+
+[sub_resource type="Environment" id="Environment_7bkty"]
+background_mode = 2
+sky = SubResource("Sky_3cq71")
+tonemap_mode = 2
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_018vu"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_w50e6"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_d4f20"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_qcek6"]
+size = Vector3(10, 1, 10)
+
+[node name="AiTest" type="Node3D" unique_id=1959317916]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1106940265]
+environment = SubResource("Environment_7bkty")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1107312138]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
+
+[node name="RigidBody3D" type="RigidBody3D" parent="." unique_id=682864574 node_paths=PackedStringArray("mesh_instance", "collision_shape")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.1451435, 0)
+script = ExtResource("1_eiaq8")
+corner_radius = 0.3
+mesh_instance = NodePath("MeshInstance3D")
+collision_shape = NodePath("CollisionShape3D")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D" unique_id=1097870691]
+shape = SubResource("BoxShape3D_018vu")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D" unique_id=684755609]
+mesh = SubResource("BoxMesh_w50e6")
+
+[node name="Ground" type="StaticBody3D" parent="." unique_id=1589646716]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground" unique_id=473854902]
+transform = Transform3D(10, 0, 0, 0, 1, 0, 0, 0, 10, 0, 0, 0)
+mesh = SubResource("BoxMesh_d4f20")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground" unique_id=1391404953]
+shape = SubResource("BoxShape3D_qcek6")
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1907785676]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.327673, 11.9536)
+
+[node name="Control" type="Control" parent="." unique_id=2083216884]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Button" type="Button" parent="Control" unique_id=1163743255]
+layout_mode = 0
+offset_left = 30.0
+offset_top = 33.0
+offset_right = 251.0
+offset_bottom = 104.0
+text = "Increse smoothness"
+script = ExtResource("2_018vu")
+
+[connection signal="button_down" from="Control/Button" to="Control/Button" method="_on_button_down"]
