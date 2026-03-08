@@ -1,0 +1,45 @@
+[gd_scene format=3 uid="uid://dlhu7cfnivd06"]
+
+[ext_resource type="Script" uid="uid://b272w6r6ndpgk" path="res://main_scene/scripts/simple_cube_controller.gd" id="1_nnm42"]
+[ext_resource type="Script" uid="uid://gnrkmp4v1tmf" path="res://main_scene/scripts/recieve_shape_change.gd" id="2_r41kr"]
+[ext_resource type="ArrayMesh" uid="uid://dq7nyxiu7fqji" path="res://assets/cube_to_sphere.res" id="3_t3y8x"]
+[ext_resource type="Script" uid="uid://uwtg56vg1u6k" path="res://main_scene/scripts/change_shape.gd" id="4_35kye"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_k0xv7"]
+bounce = 0.2
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_mxx3b"]
+
+[node name="Player" type="RigidBody3D" unique_id=565988134 node_paths=PackedStringArray("camera")]
+axis_lock_angular_y = true
+mass = 15.0
+physics_material_override = SubResource("PhysicsMaterial_k0xv7")
+gravity_scale = 3.0
+freeze = true
+angular_damp = 3.0
+script = ExtResource("1_nnm42")
+forward_force = 35
+up_force = 5
+press_cooldown = 0.6
+camera = NodePath("")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=928890165]
+shape = SubResource("BoxShape3D_mxx3b")
+script = ExtResource("2_r41kr")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=881726173]
+mesh = ExtResource("3_t3y8x")
+blend_shapes/Sphere = 0.0
+script = ExtResource("4_35kye")
+
+[node name="RemoteTransform3D" type="RemoteTransform3D" parent="." unique_id=1011308073]
+remote_path = NodePath("../../camera_joint")
+update_rotation = false
+update_scale = false
+
+[node name="Timer" type="Timer" parent="." unique_id=1067824134]
+wait_time = 0.2
+one_shot = true
+
+[connection signal="input_event" from="." to="." method="_on_input_event"]
+[connection signal="shape_changed" from="MeshInstance3D" to="CollisionShape3D" method="shape_changed"]

@@ -1,8 +1,11 @@
 [gd_scene format=3 uid="uid://cgipnl1d40hlt"]
 
-[ext_resource type="PackedScene" uid="uid://dlhu7cfnivd06" path="res://main_scene/player_v2.tscn" id="3_j04as"]
+[ext_resource type="Script" uid="uid://b272w6r6ndpgk" path="res://main_scene/scripts/simple_cube_controller.gd" id="4_k0xv7"]
+[ext_resource type="Script" uid="uid://gnrkmp4v1tmf" path="res://main_scene/scripts/recieve_shape_change.gd" id="4_mxx3b"]
 [ext_resource type="Script" uid="uid://ddu4f4ebg5c20" path="res://main_scene/scripts/camera_controller.gd" id="4_tf6gq"]
 [ext_resource type="Script" uid="uid://cyh55286v10ei" path="res://main_scene/scripts/dampness_debug_input.gd" id="5_1t12t"]
+[ext_resource type="ArrayMesh" uid="uid://dq7nyxiu7fqji" path="res://assets/cube_to_sphere.res" id="5_k0xv7"]
+[ext_resource type="Script" uid="uid://uwtg56vg1u6k" path="res://main_scene/scripts/change_shape.gd" id="5_mxx3b"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_7dm0k"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -35,6 +38,12 @@ rough = true
 size = Vector3(7.0039063, 1, 7.017334)
 
 [sub_resource type="BoxMesh" id="BoxMesh_0xm2m"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_k0xv7"]
+friction = 0.5
+bounce = 0.2
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_mxx3b"]
 
 [node name="main" type="Node3D" unique_id=1041167234]
 
@@ -113,5 +122,39 @@ mesh = SubResource("BoxMesh_0xm2m")
 [node name="dampness_debug_input" type="Node" parent="." unique_id=1166064394]
 script = ExtResource("5_1t12t")
 
-[node name="Player" parent="." unique_id=565988134 instance=ExtResource("3_j04as")]
+[node name="Player" type="RigidBody3D" parent="." unique_id=1347377217 node_paths=PackedStringArray("camera")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31.559135, 6, 0)
+axis_lock_angular_y = true
+mass = 15.0
+physics_material_override = SubResource("PhysicsMaterial_k0xv7")
+gravity_scale = 3.0
+freeze = true
+angular_damp = 3.0
+script = ExtResource("4_k0xv7")
+forward_force = 35
+up_force = 5
+press_cooldown = 0.6
+camera = NodePath("../camera_joint/Camera3D")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player" unique_id=982622254]
+shape = SubResource("BoxShape3D_mxx3b")
+script = ExtResource("4_mxx3b")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Player" unique_id=1766096784]
+transform = Transform3D(60, 0, 0, 0, 60, 0, 0, 0, 60, 0, 0, 0)
+mesh = ExtResource("5_k0xv7")
+blend_shapes/Sphere = 0.0
+script = ExtResource("5_mxx3b")
+
+[node name="RemoteTransform3D" type="RemoteTransform3D" parent="Player" unique_id=1739153026]
+remote_path = NodePath("../../camera_joint")
+update_rotation = false
+update_scale = false
+
+[node name="Timer" type="Timer" parent="Player" unique_id=1484205448]
+wait_time = 0.2
+one_shot = true
+
+[connection signal="dampness_changed" from="dampness_debug_input" to="Player/MeshInstance3D" method="change_shape"]
+[connection signal="input_event" from="Player" to="Player" method="_on_input_event"]
+[connection signal="shape_changed" from="Player/MeshInstance3D" to="Player/CollisionShape3D" method="shape_changed"]
