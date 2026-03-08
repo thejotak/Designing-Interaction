@@ -8,3 +8,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		rotate_y(-rotation_speed)
 	if event.is_action("move_camera_right"):
 		rotate_y(rotation_speed)
+
+
+func _on_dampness_debug_input_dampness_changed(change: float) -> void:
+	pass # Replace with function body.
