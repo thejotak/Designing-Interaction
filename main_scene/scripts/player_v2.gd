@@ -17,8 +17,9 @@ func _on_input_event(camera: Node, event: InputEvent, event_position: Vector3, n
 			print("The cube has been clicked!")
 			move_cube()
 			
-			
-			
+
+
+
 func move_cube():
 	
 	if $Timer.is_stopped():
@@ -34,3 +35,18 @@ func move_cube():
 		
 		apply_impulse(direction3D, camera.global_position)
 		$Timer.start(press_cooldown)
+		
+
+func change_dryness_appearance(change: float ):
+	pass
+	# This function changes the appearance of the player cube 
+	# after a change in shape has happenend
+	
+	# Change color
+	
+	# Change material
+	
+	
+	
+	
+	

@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dlhu7cfnivd06"]
 
-[ext_resource type="Script" uid="uid://b272w6r6ndpgk" path="res://main_scene/scripts/simple_cube_controller.gd" id="1_nnm42"]
+[ext_resource type="Script" uid="uid://b272w6r6ndpgk" path="res://main_scene/scripts/player_v2.gd" id="1_nnm42"]
 [ext_resource type="Script" uid="uid://gnrkmp4v1tmf" path="res://main_scene/scripts/recieve_shape_change.gd" id="2_r41kr"]
 [ext_resource type="ArrayMesh" uid="uid://dq7nyxiu7fqji" path="res://assets/cube_to_sphere.res" id="3_t3y8x"]
 [ext_resource type="Script" uid="uid://uwtg56vg1u6k" path="res://main_scene/scripts/change_shape.gd" id="4_35kye"]
