@@ -21,22 +21,11 @@ func change_shape(change: float):
 	
 	# Fetch the shape
 	var shape : Shape3D
-	var collision_kid = find(self, CollisionShape3D)
+	var collision_kid = GenericFunctions.find_node_in_children(self, CollisionShape3D)
 	shape = collision_kid.shape
 	
 	# Emit the shape
 	shape_changed.emit(shape)
 	
-	for kid in get_children():
-		kid.queue_free()
 
-
-func find(parent, type):
-	for child in parent.get_children():
-		if is_instance_of(child, type):
-			return child
-		var grandchild = find(child, type)
-		if grandchild != null:
-			return grandchild
-	return null
 	

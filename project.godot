@@ -15,6 +15,10 @@ run/main_scene="uid://cgipnl1d40hlt"
 config/features=PackedStringArray("4.6", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[autoload]
+
+GenericFunctions="*uid://dosut4ilng8k0"
+
 [input]
 
 move_camera_left={
