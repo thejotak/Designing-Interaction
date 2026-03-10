@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://befjgjt3n1iop"]
+
+[node name="test_level_0" type="Node3D" unique_id=309355288]
+
+[node name="CSGBox3D" type="CSGBox3D" parent="." unique_id=690965952]
+transform = Transform3D(20.329897, 0, 0, 0, 0.96645236, -5.2357864, 0, 0.256846, 19.701054, 0, 0, -14.22366)
+use_collision = true
+size = Vector3(0.50024414, 1, 2.3955078)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="." unique_id=255268769]
+transform = Transform3D(-5.4078035, 0, 0, 0, 0.9889254, 0.6218653, 0, -0.14841354, 4.143681, 0, -0.4463204, -4.4511395)
+use_collision = true
+size = Vector3(0.83984375, 1, 7.121216)
+
+[node name="CSGTorus3D" type="CSGTorus3D" parent="." unique_id=1085789110]
+transform = Transform3D(6.2106223, 0, 0, 0, 1, 0, 0, 0, 6.8661494, 0.4143672, -9.536743e-07, 18.816545)
+use_collision = true
