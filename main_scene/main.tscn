@@ -74,13 +74,14 @@ camera = NodePath("../camera_joint/Camera3D")
 
 [node name="MeshInstance3D" parent="Player" index="1" unique_id=881726173]
 mesh = SubResource("ArrayMesh_k0xv7")
-blend_shapes/Sphere = 1.0
 
 [node name="dampness_debug_input" type="Node" parent="Player" unique_id=1166064394]
 script = ExtResource("5_1t12t")
 
-[node name="player_dryness_behaviour" type="Node" parent="." unique_id=369906639]
+[node name="player_dryness_behaviour" type="Node" parent="Player" unique_id=369906639]
 script = ExtResource("4_ylb77")
+start_color = Color(0.86, 0.82129997, 0.086000025, 1)
+end_color = Color(0.86, 0.84667003, 0.5934, 1)
 
 [node name="test_environment_1" type="Node3D" parent="." unique_id=654916653]
 
@@ -111,5 +112,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.5805807, 3.5463867, -45.428
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.5805807, 3.5463867, -45.42827)
 
 [connection signal="dampness_changed" from="Player/dampness_debug_input" to="Player/MeshInstance3D" method="change_shape"]
+[connection signal="change_shape" from="Player/player_dryness_behaviour" to="Player/MeshInstance3D" method="change_shape"]
 
 [editable path="Player"]
