@@ -5,7 +5,16 @@ signal shape_changed(shape: Shape3D)
 func change_shape(change: float):
 	
 	# Change the blend value
-	set_blend_shape_value(0, get_blend_shape_value(0) + change )
+	var new_blend_shape_value = get_blend_shape_value(0) + change
+	new_blend_shape_value = clampf(new_blend_shape_value, 0, 1)
+	print(new_blend_shape_value)
+	
+	# If no change happened, don't change anything
+	if get_blend_shape_value(0) == new_blend_shape_value:
+		return
+	
+	set_blend_shape_value(0, new_blend_shape_value)
+	
 	
 	# Create the current blendshape mesh
 	var mesh_array : ArrayMesh = bake_mesh_from_current_blend_shape_mix()
