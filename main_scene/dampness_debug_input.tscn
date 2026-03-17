@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://b2ytho4g4ese7"]
+
+[ext_resource type="Script" uid="uid://cyh55286v10ei" path="res://main_scene/scripts/dampness_debug_input.gd" id="1_jfmq0"]
+
+[node name="dampness_debug_input" type="Node" unique_id=1132870849]
+script = ExtResource("1_jfmq0")

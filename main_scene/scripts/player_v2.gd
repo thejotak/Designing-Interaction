@@ -4,10 +4,15 @@ extends RigidBody3D
 @export var up_force = 1
 @export var press_cooldown := 0.5
 
+@export var nudge_power := 1.0
+
+@export var touch_forward_force := 1.0
+
 @export var camera : Camera3D
 
-
 var direction3D
+var touch_pressed = true
+
 
 
 func _on_input_event(camera: Node, event: InputEvent, event_position: Vector3, normal: Vector3, shape_idx: int) -> void:
@@ -17,8 +22,18 @@ func _on_input_event(camera: Node, event: InputEvent, event_position: Vector3, n
 			print("The cube has been clicked!")
 			move_cube()
 			
+	if event is InputEventScreenTouch:
+		if event.pressed:
+			touch_pressed = true
+	if event is InputEventScreenDrag:
+		event.screen_velocity
 
 
+func _input(event: InputEvent) -> void:
+	if touch_pressed:
+		if event is InputEventScreenTouch:
+			if event.pressed == false:
+				touch_pressed = false
 
 func move_cube():
 	
@@ -37,16 +52,34 @@ func move_cube():
 		$Timer.start(press_cooldown)
 		
 
-func change_dryness_appearance(change: float ):
-	pass
-	# This function changes the appearance of the player cube 
-	# after a change in shape has happenend
+func move_cube_with_touch(event: InputEventScreenDrag):
+	if touch_pressed:
+		var velocity = event.screen_velocity * touch_forward_force
+		var direction = Vector3(velocity.x, velocity.y, up_force)
 	
-	# Change color
+		apply_force(direction)
+
+#func change_dryness_appearance(change: float ):
+	#pass
+	## This function changes the appearance of the player cube 
+	## after a change in shape has happenend
+	#
+	## Change color
+	#var mesh = GenericFunctions.find_node_in_children(self, MeshInstance3D)
+	#mesh
+	#
+	## Change material
+
+
+func _on_mouse_entered() -> void:
+	var mouse_pos = camera.get_viewport().get_mouse_position()
+	var depth = position.distance_to(camera.position)
+	print(depth)
+	var mouse_world_position = camera.project_position(mouse_pos, depth)
 	
-	# Change material
+	var nudge_direction = mouse_world_position.direction_to(position)
 	
-	
-	
+	apply_impulse(nudge_direction * nudge_power, mouse_world_position)
+	print(nudge_direction)
 	
 	

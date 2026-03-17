@@ -7,7 +7,6 @@ func change_shape(change: float):
 	# Change the blend value
 	var new_blend_shape_value = get_blend_shape_value(0) + change
 	new_blend_shape_value = clampf(new_blend_shape_value, 0, 1)
-	print(new_blend_shape_value)
 	
 	# If no change happened, don't change anything
 	if get_blend_shape_value(0) == new_blend_shape_value:

@@ -5,7 +5,7 @@ extends Node
 
 var t : float = 0
 
-var time_to_dry_out := 20.0
+@export var time_to_dry_out := 20.0
 var is_drying_out = false
 
 signal change_shape(shape_change)
