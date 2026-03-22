@@ -1,0 +1,4 @@
+To Do:
+
+- De kubus gaat snellen 1 kant op dan een andere wanneer de speler erop klikt
+- De kubus gaat wanneer de speler erover hovered alleen 1 kant op
