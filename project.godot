@@ -19,6 +19,10 @@ config/icon="res://icon.svg"
 
 GenericFunctions="*uid://dosut4ilng8k0"
 
+[global_group]
+
+player="The player"
+
 [input]
 
 move_camera_left={
