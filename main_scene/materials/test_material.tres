@@ -1,5 +1,8 @@
 [gd_resource type="StandardMaterial3D" format=3 uid="uid://7vpoyjces5qq"]
 
+[sub_resource type="Gradient" id="Gradient_7jmjx"]
+colors = PackedColorArray(0, 0.44481927, 0.7106332, 1, 0.85882354, 0.81960785, 0.08627451, 1)
+
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_50wab"]
 noise_type = 2
 frequency = 0.0005
@@ -12,6 +15,7 @@ fractal_weighted_strength = 0.2
 width = 923
 height = 2978
 noise = SubResource("FastNoiseLite_50wab")
+color_ramp = SubResource("Gradient_7jmjx")
 in_3d_space = true
 as_normal_map = true
 bump_strength = 21.9
