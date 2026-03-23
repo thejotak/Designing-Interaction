@@ -4,7 +4,7 @@ extends RigidBody3D
 @export var up_force = 1
 @export var press_cooldown := 0.5
 
-@export var nudge_power := 1.0
+@export var nudge_power := 0.2
 
 @export var touch_forward_force := 1.0
 
@@ -51,7 +51,7 @@ func move_cube():
 		direction3D.z = direction2D.y
 		print(direction3D)
 		
-		apply_impulse(direction3D, camera.global_position)
+		apply_impulse(direction3D, Vector3(0, 1, 0))
 		$Timer.start(press_cooldown)
 		
 
@@ -76,13 +76,28 @@ func move_cube_with_touch(event: InputEventScreenDrag):
 
 func _on_mouse_entered() -> void:
 	if $Timer.is_stopped():
-		var mouse_pos = camera.get_viewport().get_mouse_position()
-		var depth = position.distance_to(camera.position)
+		#var mouse_pos = camera.get_viewport().get_mouse_position()
+		#var depth = position.distance_to(camera.position)
+	#
+		#var mouse_world_position = camera.project_position(mouse_pos, depth)
+	#
+		#var nudge_direction = position.direction_to(mouse_world_position)
 	
-		var mouse_world_position = camera.project_position(mouse_pos, depth)
+		direction3D = global_position - camera.global_position
+		var direction2D = Vector2(direction3D.x, direction3D.z)
+		direction2D = direction2D.normalized()
+		print(direction2D)
+		
+		direction3D.y = up_force
+		direction2D *= forward_force
+		print(direction2D)
+		
+		direction3D.x = direction2D.x
+		direction3D.z = direction2D.y
+		print(direction3D)
+		
+		apply_impulse(direction3D * nudge_power, Vector3(0, 1, 0))
 	
-		var nudge_direction = mouse_world_position.direction_to(position)
 	
-		apply_impulse(nudge_direction * nudge_power, mouse_world_position)
 	
 	

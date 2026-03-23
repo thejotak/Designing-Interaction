@@ -136,6 +136,7 @@ mesh = SubResource("BoxMesh_k0xv7")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, -30.407417)
 mass = 8.0
 freeze = false
+up_force = 50
 camera = NodePath("../camera_joint/Camera3D")
 
 [node name="MeshInstance3D" parent="Player" index="1" unique_id=881726173]
@@ -151,10 +152,10 @@ start_color = Color(0.85882354, 0.84705883, 0.5921569, 1)
 end_color = Color(0.85882354, 0.81960785, 0.08627451, 1)
 start_uv1_scale = Vector3(-0.5, -0.5, -0.5)
 end_uv1_scale = Vector3(-0.2, -0.2, -0.2)
-start_up_force = 5.0
-end_up_force = 2.0
+start_up_force = 50.0
+end_up_force = 10.0
 start_forward_force = 35.0
-end_forward_force = 70.0
+end_forward_force = 120.0
 start_mass = 8.0
 end_mass = 30.0
 time_to_dry_out = 30.0
