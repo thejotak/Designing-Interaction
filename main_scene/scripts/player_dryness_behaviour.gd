@@ -1,6 +1,9 @@
 extends Node
 
 @export var player : RigidBody3D
+@export var becomeing_square_paritcles : GPUParticles3D
+@export var becomeing_round_particles : GPUParticles3D
+@export var particle_attractor : Node
 
 @export var start_color : Color
 @export var end_color : Color
@@ -53,6 +56,8 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if state == player_state.becoming_cube:
 		t -= delta
+		
+	
 	if state == player_state.becoming_sphere:
 		t += delta
 	
@@ -86,7 +91,11 @@ func _process(delta: float) -> void:
 		
 		if (t >= time_to_dry_out):
 			print("the cube is completely wet!")
-			state = player_state.stable
+			become_stable(player)
+			
+		if (t <= 0):
+			print("The cube is comepletely dry!")
+			become_stable(player)
 	
 
 func update_variable(start_value, end_value):
@@ -100,13 +109,22 @@ func become_stable(node: Node3D):
 	if (node.is_in_group("player")):
 		state = player_state.stable
 		print("The cube is stable!")
+		
+		becomeing_square_paritcles.emitting = false
+		becomeing_round_particles.emitting = false
+		particle_attractor.process_mode = Node.PROCESS_MODE_DISABLED
 
 func become_round(node: Node3D):
 	if (node.is_in_group("player")):
 		state = player_state.becoming_sphere
 		print("The cube is becoming rounder!")
+		
+		becomeing_round_particles.emitting = true
+		particle_attractor.process_mode = Node.PROCESS_MODE_INHERIT
 
 func become_square(node: Node3D):
 	if (node.is_in_group("player")):
 		state = player_state.becoming_cube
 		print("The cube is becoming more square!") 
+		
+		becomeing_square_paritcles.emitting = true

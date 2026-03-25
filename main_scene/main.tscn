@@ -18,7 +18,7 @@ sky_material = SubResource("ProceduralSkyMaterial_7dm0k")
 background_mode = 2
 sky = SubResource("Sky_ig7tw")
 ambient_light_source = 3
-ambient_light_color = Color(0.8080868, 0.38150465, 0.5334485, 1)
+ambient_light_color = Color(0.8117647, 0.8117647, 0.8117647, 1)
 ambient_light_sky_contribution = 0.89
 ambient_light_energy = 16.0
 reflected_light_source = 1
@@ -42,6 +42,67 @@ size = Vector3(17, 1, 17)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_mxx3b"]
 size = Vector3(17, 3, 17)
+
+[sub_resource type="Curve" id="Curve_mxx3b"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -3.922127, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_38sc1"]
+curve = SubResource("Curve_mxx3b")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_mxx3b"]
+lifetime_randomness = 0.1
+emission_shape_offset = Vector3(-0.975, 0, 0)
+emission_shape_scale = Vector3(5.945, 1.655, -1.44)
+emission_shape = 6
+emission_ring_axis = Vector3(2.36, 0, 0.075)
+emission_ring_height = 0.45
+emission_ring_radius = 0.2
+emission_ring_inner_radius = 0.65
+emission_ring_cone_angle = 9.13
+radial_velocity_min = -2.2351742e-05
+radial_velocity_max = 4.9999776
+gravity = Vector3(0, 4.9, 0)
+linear_accel_min = -1.0000023
+linear_accel_max = 6.1099977
+scale_min = 0.099999994
+scale_max = 0.5
+scale_curve = SubResource("CurveTexture_38sc1")
+turbulence_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mxx3b"]
+transparency = 1
+diffuse_mode = 1
+albedo_color = Color(0.6313726, 0.6313726, 0.6313726, 0.38431373)
+
+[sub_resource type="SphereMesh" id="SphereMesh_38sc1"]
+material = SubResource("StandardMaterial3D_mxx3b")
+
+[sub_resource type="Curve" id="Curve_38sc1"]
+_limits = [-1.0, 1.0, 0.0, 1.0]
+_data = [Vector2(0, -1), 0.0, 0.0, 0, 0, Vector2(0.8693693, -0.4641509), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_tf6gq"]
+curve = SubResource("Curve_38sc1")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_1t12t"]
+emission_shape_offset = Vector3(0, -0.98, 0)
+emission_shape_scale = Vector3(3, 0.195, 3)
+emission_shape = 1
+emission_sphere_radius = 1.0
+spread = 82.969
+gravity = Vector3(0, 2.52, 0)
+linear_accel_curve = SubResource("CurveTexture_tf6gq")
+damping_max = 8.163
+scale_min = 0.099999994
+scale_max = 0.099999994
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_m8ysc"]
+albedo_color = Color(0.39607844, 0.6, 0.77254903, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_i5p2l"]
+material = SubResource("StandardMaterial3D_m8ysc")
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_k0xv7"]
 resource_name = "Cube_005"
@@ -132,6 +193,37 @@ shape = SubResource("BoxShape3D_ylb77")
 transform = Transform3D(17, 0, 0, 0, 1, 0, 0, 0, 17, 0, 0, 0)
 mesh = SubResource("BoxMesh_k0xv7")
 
+[node name="particles" type="Node3D" parent="." unique_id=300942681]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, -30.407417)
+
+[node name="steam_particles" type="GPUParticles3D" parent="particles" unique_id=1321444140]
+transform = Transform3D(-0.04128272, 0.032726076, -0.99861133, -0.9991475, -0.001352174, 0.041260563, 0, 0.99946344, 0.032754, 0, 0, 0)
+emitting = false
+amount = 150
+amount_ratio = 0.277
+preprocess = 0.87
+speed_scale = 2.26
+explosiveness = 0.12
+randomness = 0.45
+trail_lifetime = 0.01
+process_material = SubResource("ParticleProcessMaterial_mxx3b")
+draw_pass_1 = SubResource("SphereMesh_38sc1")
+
+[node name="water_particles" type="GPUParticles3D" parent="particles" unique_id=1478792008]
+emitting = false
+amount = 100
+lifetime = 0.42
+randomness = 0.36
+process_material = SubResource("ParticleProcessMaterial_1t12t")
+draw_pass_1 = SubResource("SphereMesh_i5p2l")
+
+[node name="particle_attractor" type="GPUParticlesAttractorSphere3D" parent="particles" unique_id=1998352901]
+process_mode = 4
+transform = Transform3D(4, 0, 0, 0, 0.39, 0, 0, 0, 4, 0, 0.023407936, 0.14769173)
+strength = 18.46
+attenuation = 1.2745571
+radius = 1.8968259
+
 [node name="Player" parent="." unique_id=565988134 node_paths=PackedStringArray("camera") groups=["player"] instance=ExtResource("3_j04as")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, -30.407417)
 mass = 8.0
@@ -142,12 +234,20 @@ camera = NodePath("../camera_joint/Camera3D")
 [node name="MeshInstance3D" parent="Player" index="1" unique_id=881726173]
 mesh = SubResource("ArrayMesh_k0xv7")
 
-[node name="Timer" parent="Player" index="3" unique_id=1067824134]
+[node name="RemoteTransform3D2" type="RemoteTransform3D" parent="Player" unique_id=1605594516]
+remote_path = NodePath("../../particles")
+update_rotation = false
+update_scale = false
+
+[node name="Timer" parent="Player" index="4" unique_id=1067824134]
 wait_time = 0.3
 
-[node name="player_dryness_behaviour" type="Node" parent="Player" unique_id=369906639 node_paths=PackedStringArray("player")]
+[node name="player_dryness_behaviour" type="Node" parent="Player" unique_id=369906639 node_paths=PackedStringArray("player", "becomeing_square_paritcles", "becomeing_round_particles", "particle_attractor")]
 script = ExtResource("4_ylb77")
 player = NodePath("..")
+becomeing_square_paritcles = NodePath("../../particles/steam_particles")
+becomeing_round_particles = NodePath("../../particles/water_particles")
+particle_attractor = NodePath("../../particles/particle_attractor")
 start_color = Color(0.85882354, 0.84705883, 0.5921569, 1)
 end_color = Color(0.85882354, 0.81960785, 0.08627451, 1)
 start_uv1_scale = Vector3(-0.5, -0.5, -0.5)
@@ -158,7 +258,6 @@ start_forward_force = 35.0
 end_forward_force = 120.0
 start_mass = 8.0
 end_mass = 30.0
-time_to_dry_out = 30.0
 
 [connection signal="body_entered" from="test_environment_3/wet_surface/Area3D" to="Player/player_dryness_behaviour" method="become_round"]
 [connection signal="body_exited" from="test_environment_3/wet_surface/Area3D" to="Player/player_dryness_behaviour" method="become_stable"]
