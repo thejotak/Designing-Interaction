@@ -35,6 +35,7 @@ func change_shape(change: float):
 	# Emit the shape
 	shape_changed.emit(shape)
 	
+	# Kill the kids
 	for kid in get_children():
 		kid.queue_free()
 

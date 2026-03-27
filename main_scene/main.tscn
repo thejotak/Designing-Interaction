@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://bd3tqlero8dda" path="res://main_scene/environment/normal_surface.tscn" id="5_mxx3b"]
 [ext_resource type="PackedScene" uid="uid://xxpct1qikffo" path="res://main_scene/environment/wet_surface.tscn" id="6_38sc1"]
 [ext_resource type="PackedScene" uid="uid://cnoc1q1qqdx4c" path="res://main_scene/environment/hot_surface.tscn" id="8_tf6gq"]
+[ext_resource type="Script" uid="uid://seut7mb5iqux" path="res://main_scene/death.gd" id="9_1t12t"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_7dm0k"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -122,6 +123,9 @@ size = Vector3(17, 1, 17)
 [sub_resource type="BoxShape3D" id="BoxShape3D_mxx3b"]
 size = Vector3(17, 3, 17)
 
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_m8ysc"]
+plane = Plane(0, -4.085, 0, -0.305)
+
 [node name="main" type="Node3D" unique_id=1041167234]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1275046953]
@@ -210,7 +214,7 @@ time_to_dry_out = 10.0
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.6451626, 8.684442, 40.405342)
 
 [node name="normal_surface" parent="prototype_environment" unique_id=168661066 instance=ExtResource("5_mxx3b")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.7809258, -6.0373325, -67.83)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.7809258, -8.810741, -67.83)
 
 [node name="wet_surface" type="StaticBody3D" parent="prototype_environment" unique_id=146342038 groups=["wet_surface"]]
 transform = Transform3D(1, 0, 0, 0, 0.9396926, 0.34202012, 0, -0.34202012, 0.9396926, 5.143552, -12.678091, -84.32032)
@@ -240,15 +244,44 @@ transform = Transform3D(1, 0, 0, 0, 0.9396926, 0.34202012, 0, -0.34202012, 0.939
 [node name="wet_surface4" parent="prototype_environment" unique_id=1696330255 groups=["wet_surface"] instance=ExtResource("6_38sc1")]
 transform = Transform3D(1, 0, 0, 0, 0.9396926, 0.34202012, 0, -0.34202012, 0.9396926, 5.1435537, -29.998192, -131.66922)
 
-[node name="hot_surface" parent="prototype_environment" unique_id=1549104266 groups=["hot_surface"] instance=ExtResource("8_tf6gq")]
-
 [node name="normal_surface2" parent="prototype_environment" unique_id=1313491543 instance=ExtResource("5_mxx3b")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.120773, -32.95149, -147.70198)
+transform = Transform3D(0.52, 0, 0, 0, 0.52, 0, 0, 0, 0.52, -2.71426, -33.595, -144.16902)
+
+[node name="normal_surface3" parent="prototype_environment" unique_id=1173244642 instance=ExtResource("5_mxx3b")]
+transform = Transform3D(0.52, 0, 0, 0, 0.52, 0, 0, 0, 0.52, 13.625436, -33.595, -144.11708)
+
+[node name="normal_surface4" parent="prototype_environment" unique_id=677692676 instance=ExtResource("5_mxx3b")]
+transform = Transform3D(0.52, 0, 0, 0, 0.52, 0, 0, 0, 0.52, -2.71426, -33.595, -152.16902)
+
+[node name="normal_surface5" parent="prototype_environment" unique_id=1416956518 instance=ExtResource("5_mxx3b")]
+transform = Transform3D(0.52, 0, 0, 0, 0.52, 0, 0, 0, 0.52, 13.665, -33.595, -152.117)
+
+[node name="normal_surface6" parent="prototype_environment" unique_id=222707760 instance=ExtResource("5_mxx3b")]
+transform = Transform3D(0.52, 0, 0, 0, 0.52, 0, 0, 0, 0.52, 5.4297667, -31.807713, -172.64023)
+
+[node name="normal_surface7" parent="prototype_environment" unique_id=1837732576 instance=ExtResource("5_mxx3b")]
+transform = Transform3D(0.52, 0, 0, 0, 0.52, 0, 0, 0, 0.52, 5.4297667, -31.09277, -174.67032)
+
+[node name="normal_surface8" parent="prototype_environment" unique_id=14761341 instance=ExtResource("5_mxx3b")]
+transform = Transform3D(0.52, 0, 0, 0, 0.52, 0, 0, 0, 0.52, 5.4297667, -30.442516, -176.84549)
 
 [node name="hot_surface2" parent="prototype_environment" unique_id=1118389156 groups=["hot_surface"] instance=ExtResource("8_tf6gq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.1630917, -32.97353, -164.65335)
+transform = Transform3D(0.585, 0, 0, 0, 0.585, 0, 0, 0, 0.585, 7.0642715, -33.0014, -162.23695)
+
+[node name="hot_surface3" parent="prototype_environment" unique_id=306013449 groups=["hot_surface"] instance=ExtResource("8_tf6gq")]
+transform = Transform3D(0.585, 0, 0, 0, 0.585, 0, 0, 0, 0.585, 3.4478629, -33.0014, -162.23695)
+
+[node name="Death" type="Area3D" parent="." unique_id=879116845 node_paths=PackedStringArray("player")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -171.05905, 0)
+script = ExtResource("9_1t12t")
+player = NodePath("../Player")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Death" unique_id=534175895]
+transform = Transform3D(-77.075, 0, 0, 0, -77.075, 0, 0, 0, -77.075, 0, 0, 0)
+shape = SubResource("WorldBoundaryShape3D_m8ysc")
 
 [connection signal="mouse_entered" from="Player" to="Player" method="_on_mouse_entered"]
 [connection signal="change_shape" from="Player/player_dryness_behaviour" to="Player/MeshInstance3D" method="change_shape"]
+[connection signal="body_entered" from="Death" to="Player/player_dryness_behaviour" method="reset_dryness"]
 
 [editable path="Player"]

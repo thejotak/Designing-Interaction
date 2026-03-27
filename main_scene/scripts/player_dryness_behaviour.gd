@@ -21,7 +21,8 @@ extends Node
 @export var end_mass : float
 
 
-var t : float = 0
+@export var t : float = 0
+var old_t : float = 0
 
 enum player_state 
 {
@@ -49,8 +50,8 @@ func _ready() -> void:
 	material.albedo_color = start_color
 	material.uv1_scale = start_uv1_scale
 	
-	t = 0
 	
+	set_dryness()
 	
 	for  wet_surface in get_tree().get_nodes_in_group("wet_surface"):
 		var area = GenericFunctions.find_node_in_children(wet_surface, Area3D)
@@ -72,9 +73,34 @@ func _process(delta: float) -> void:
 	if state == player_state.becoming_sphere:
 		t += delta
 	
-	
 	if (state == player_state.becoming_cube || state == player_state.becoming_sphere):
-		
+		change_dryness()
+		update_shape()
+	
+	
+
+# Not working I think
+func set_dryness():
+	state = player_state.becoming_sphere
+	change_dryness()
+	
+	
+	become_stable()
+	
+func reset_dryness(node):
+	state = player_state.becoming_cube
+	
+	# Change the shape by negative * all the change that has happened
+	change_shape.emit(-t/time_to_dry_out)
+	
+	# Change t to 0 so when the variables are updated, the start_value is applied
+	t = 0
+	change_dryness()
+	
+	become_stable()
+
+func change_dryness():
+	
 		# Change color
 		var new_color = update_variable(start_color, end_color)
 		material.albedo_color = new_color
@@ -95,19 +121,20 @@ func _process(delta: float) -> void:
 		var new_mass = update_variable(start_mass, end_mass)
 		player.mass = new_mass
 		
-		
-		# Change Shape
-		change_shape.emit(delta/time_to_dry_out * state)
-		
-		
-		if (t >= time_to_dry_out - 0.05):
-			print("the cube is completely wet!")
-			become_stable()
-			
-		if (t <= -0.05):
-			print("The cube is comepletely dry!")
-			become_stable()
+
+func update_shape():
+	# Change Shape
+	change_shape.emit((t - old_t)/time_to_dry_out * state)
+	old_t = t
 	
+	if (t >= time_to_dry_out - 0.05):
+		print("the cube is completely wet!")
+		become_stable()
+		
+	if (t <= -0.05):
+		print("The cube is comepletely dry!")
+		become_stable()
+
 
 func update_variable(start_value, end_value):
 	var difference = end_value - start_value
