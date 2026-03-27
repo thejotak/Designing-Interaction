@@ -22,6 +22,8 @@ GenericFunctions="*uid://dosut4ilng8k0"
 [global_group]
 
 player="The player"
+wet_surface=""
+hot_surface=""
 
 [input]
 

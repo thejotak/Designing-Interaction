@@ -3,7 +3,7 @@ extends Node
 @export var player : RigidBody3D
 @export var becomeing_square_paritcles : GPUParticles3D
 @export var becomeing_round_particles : GPUParticles3D
-@export var particle_attractor : Node
+@export var particle_attractor : Node3D
 
 @export var start_color : Color
 @export var end_color : Color
@@ -30,6 +30,7 @@ enum player_state
 	becoming_sphere = 1,
 }
 var state : player_state = player_state.stable
+var enter_exit_buffer := 0
 
 @export var time_to_dry_out := 20.0
 
@@ -50,6 +51,16 @@ func _ready() -> void:
 	
 	t = 0
 	
+	
+	for  wet_surface in get_tree().get_nodes_in_group("wet_surface"):
+		var area = GenericFunctions.find_node_in_children(wet_surface, Area3D)
+		area.connect("body_entered", become_round.bind())
+		area.connect("body_exited", become_stable_exited.bind())
+	
+	for  hot_surface in get_tree().get_nodes_in_group("hot_surface"):
+		var area = GenericFunctions.find_node_in_children(hot_surface, Area3D)
+		area.connect("body_entered", become_square.bind())
+		area.connect("body_exited", become_stable_exited.bind())
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -89,13 +100,13 @@ func _process(delta: float) -> void:
 		change_shape.emit(delta/time_to_dry_out * state)
 		
 		
-		if (t >= time_to_dry_out):
+		if (t >= time_to_dry_out - 0.05):
 			print("the cube is completely wet!")
-			become_stable(player)
+			become_stable()
 			
-		if (t <= 0):
+		if (t <= -0.05):
 			print("The cube is comepletely dry!")
-			become_stable(player)
+			become_stable()
 	
 
 func update_variable(start_value, end_value):
@@ -103,27 +114,45 @@ func update_variable(start_value, end_value):
 	var new_value = start_value + difference * (t/time_to_dry_out)
 	return new_value
 
+func become_stable():
+	
+	state = player_state.stable
+	print("The cube is stable!")
+	
+	becomeing_square_paritcles.emitting = false
+	becomeing_round_particles.emitting = false
+	particle_attractor.process_mode = Node.PROCESS_MODE_DISABLED
+	particle_attractor.visible = false
 
-
-func become_stable(node: Node3D):
+func become_stable_exited(node: Node3D):
 	if (node.is_in_group("player")):
-		state = player_state.stable
-		print("The cube is stable!")
 		
-		becomeing_square_paritcles.emitting = false
-		becomeing_round_particles.emitting = false
-		particle_attractor.process_mode = Node.PROCESS_MODE_DISABLED
+		enter_exit_buffer -= 1
+		if enter_exit_buffer > 0:
+			
+			print("not stabilizing in between surfaces")
+			print(enter_exit_buffer)
+			return
+		
+		become_stable()
 
 func become_round(node: Node3D):
 	if (node.is_in_group("player")):
+		enter_exit_buffer += 1
+		print(enter_exit_buffer)
+		
 		state = player_state.becoming_sphere
 		print("The cube is becoming rounder!")
 		
 		becomeing_round_particles.emitting = true
 		particle_attractor.process_mode = Node.PROCESS_MODE_INHERIT
+		particle_attractor.visible = true
 
 func become_square(node: Node3D):
 	if (node.is_in_group("player")):
+		enter_exit_buffer += 1
+		print(enter_exit_buffer)
+		
 		state = player_state.becoming_cube
 		print("The cube is becoming more square!") 
 		

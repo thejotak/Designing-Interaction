@@ -15,6 +15,8 @@ var touch_pressed = true
 
 
 
+
+
 func _on_input_event(camera: Node, event: InputEvent, event_position: Vector3, normal: Vector3, shape_idx: int) -> void:
 	
 	if event is InputEventMouseButton: 
@@ -41,15 +43,14 @@ func move_cube():
 		direction3D = global_position - camera.global_position
 		var direction2D = Vector2(direction3D.x, direction3D.z)
 		direction2D = direction2D.normalized()
-		print(direction2D)
+		
 		
 		direction3D.y = up_force
 		direction2D *= forward_force
-		print(direction2D)
+		
 		
 		direction3D.x = direction2D.x
 		direction3D.z = direction2D.y
-		print(direction3D)
 		
 		apply_impulse(direction3D, Vector3(0, 1, 0))
 		$Timer.start(press_cooldown)
@@ -86,15 +87,15 @@ func _on_mouse_entered() -> void:
 		direction3D = global_position - camera.global_position
 		var direction2D = Vector2(direction3D.x, direction3D.z)
 		direction2D = direction2D.normalized()
-		print(direction2D)
+		
 		
 		direction3D.y = up_force
 		direction2D *= forward_force
-		print(direction2D)
+		
 		
 		direction3D.x = direction2D.x
 		direction3D.z = direction2D.y
-		print(direction3D)
+		
 		
 		apply_impulse(direction3D * nudge_power, Vector3(0, 1, 0))
 	
