@@ -22,7 +22,6 @@ extends Node
 
 
 @export var t : float = 0
-var old_t : float = 0
 
 enum player_state 
 {
@@ -75,7 +74,7 @@ func _process(delta: float) -> void:
 	
 	if (state == player_state.becoming_cube || state == player_state.becoming_sphere):
 		change_dryness()
-		update_shape()
+		update_shape(delta)
 	
 	
 
@@ -122,16 +121,16 @@ func change_dryness():
 		player.mass = new_mass
 		
 
-func update_shape():
+func update_shape(delta):
 	# Change Shape
-	change_shape.emit((t - old_t)/time_to_dry_out * state)
-	old_t = t
+	print((delta)/time_to_dry_out * state)
+	change_shape.emit((delta)/time_to_dry_out * state)
 	
-	if (t >= time_to_dry_out - 0.05):
+	if (t >= time_to_dry_out - 0.05 && state == player_state.becoming_sphere):
 		print("the cube is completely wet!")
 		become_stable()
 		
-	if (t <= -0.05):
+	if (t <= -0.05 && state == player_state.becoming_cube):
 		print("The cube is comepletely dry!")
 		become_stable()
 
