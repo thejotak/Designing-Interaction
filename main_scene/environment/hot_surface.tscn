@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://cnoc1q1qqdx4c"]
+
+[ext_resource type="Material" uid="uid://c8jjxh675213k" path="res://main_scene/materials/hot_material.tres" id="1_v4r6f"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ylb77"]
+size = Vector3(17, 1, 17)
+
+[sub_resource type="BoxMesh" id="BoxMesh_k0xv7"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_mxx3b"]
+size = Vector3(17, 3, 17)
+
+[node name="hot_surface" type="StaticBody3D" unique_id=1549104266]
+input_ray_pickable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=628618080]
+shape = SubResource("BoxShape3D_ylb77")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=558325859]
+transform = Transform3D(17, 0, 0, 0, 1, 0, 0, 0, 17, 0, 0, 0)
+material_override = ExtResource("1_v4r6f")
+mesh = SubResource("BoxMesh_k0xv7")
+
+[node name="Area3D" type="Area3D" parent="." unique_id=518404477]
+input_ray_pickable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=602654559]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+shape = SubResource("BoxShape3D_mxx3b")
