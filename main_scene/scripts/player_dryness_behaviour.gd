@@ -157,7 +157,6 @@ func become_stable_exited(node: Node3D):
 		if enter_exit_buffer > 0:
 			
 			print("not stabilizing in between surfaces")
-			print(enter_exit_buffer)
 			return
 		
 		become_stable()
@@ -165,7 +164,7 @@ func become_stable_exited(node: Node3D):
 func become_round(node: Node3D):
 	if (node.is_in_group("player")):
 		enter_exit_buffer += 1
-		print(enter_exit_buffer)
+		
 		
 		state = player_state.becoming_sphere
 		print("The cube is becoming rounder!")
